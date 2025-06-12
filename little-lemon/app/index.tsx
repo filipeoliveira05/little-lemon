@@ -4,6 +4,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import Onboarding from "./onboarding";
 import Profile from "./profile";
 import SplashScreen from "./SplashScreen";
+import Home from "./home";
 
 export default function Index() {
   const [isOnboarded, setIsOnboarded] = React.useState<boolean | null>(null);
@@ -23,13 +24,8 @@ export default function Index() {
     return <SplashScreen />;
   }
 
-  const handleLogout = async () => {
-    await AsyncStorage.clear();
-    setIsOnboarded(false);
-  };
-
   return isOnboarded ? (
-    <Profile onLogout={handleLogout} />
+    <Home />
   ) : (
     <Onboarding onComplete={handleOnboardingComplete} />
   );

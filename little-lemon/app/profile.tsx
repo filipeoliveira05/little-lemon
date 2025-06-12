@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useRouter } from "expo-router";
 import {
   View,
   Text,
@@ -14,6 +15,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as ImagePicker from "expo-image-picker";
 
 export default function Profile({ onLogout }: { onLogout: () => void }) {
+  const router = useRouter();
+
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -86,7 +89,11 @@ export default function Profile({ onLogout }: { onLogout: () => void }) {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity style={styles.backButton}>
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => router.push("/home")}
+          activeOpacity={0.7}
+        >
           <Text style={styles.backButtonText}>{"<"}</Text>
         </TouchableOpacity>
         <View style={styles.headerCenter}>
@@ -184,6 +191,7 @@ export default function Profile({ onLogout }: { onLogout: () => void }) {
         onPress={async () => {
           await AsyncStorage.clear();
           if (onLogout) onLogout();
+          router.replace("/");
         }}
       >
         <Text style={styles.logoutButtonText}>Log out</Text>
